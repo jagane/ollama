@@ -67,9 +67,7 @@ def chat(messages):
         return body['choices'][0]['message']
     else:
         for line in r.iter_lines():
-            print(f"AAAAAAAAAAAAAAAAAAAAAAA {line}")
             body = json.loads(line)
-            print(f"BBBBBBBBBBBBBBBBBBBBBBB {body}")
             if "error" in body:
                 raise Exception(body["error"])
             if body.get("done") is False:
@@ -141,11 +139,9 @@ def main():
         messages.append({"role": "user", "content": user_input})
         datetimes.append(datetime.now())
         message = chat(messages)
-        print(f"################ {message}")
         messages.append(message)
         datetimes.append(datetime.now())
         code_array = extract_code(message, 'python')
-        print(f"@@@@@@@@@@@@@@@@@@@@@ {code_array}")
         if not code_array:
             lines = message['content'].splitlines()
             mr = "\n".join(lines)
@@ -158,7 +154,6 @@ def main():
             messages.append(message)
             datetimes.append(datetime.now())
             pip_reqs_array = extract_code(message, 'plaintext')
-            print(f"AAAAAAAAAAAAAAAAAA {pip_reqs_array}")
         print("\n\n")
 
 
